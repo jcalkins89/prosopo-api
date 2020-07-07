@@ -57,7 +57,35 @@ app.post("/register", (req, res) => {
   res.json(database.users[database.users.length - 1]);
 });
 
-// signin --> POST = success/fail
-// register --> POST = user (new user object)
-// profile/:userid --> GET = user
-// image --> PUT --> user/count goes up per image submitted
+app.get("/profile/:id", (req, res) => {
+  const { id } = req.params;
+  let found = false;
+
+  database.users.forEach((user) => {
+    if (user.id === id) {
+      found = true;
+      return res.json(user);
+    }
+  });
+
+  if (!found) {
+    res.status(400).json("Not Found");
+  }
+});
+
+app.post("/image", (req, res) => {
+  const { id } = req.body;
+  let found = false;
+
+  database.users.forEach((user) => {
+    if (user.id === id) {
+      found = true;
+      user.entries++;
+      return res.json(user.entries);
+    }
+  });
+
+  if (!found) {
+    res.status(400).json("Not Found");
+  }
+});
