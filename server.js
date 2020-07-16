@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 app.use(express.json());
@@ -45,6 +46,11 @@ app.post("/signin", (req, res) => {
 
 app.post("/register", (req, res) => {
   const { email, name, password } = req.body;
+  bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.hash(password, salt, function (err, hash) {
+      console.log("This is the hashed password: ", hash);
+    });
+  });
 
   database.users.push({
     id: "125",
@@ -89,3 +95,11 @@ app.post("/image", (req, res) => {
     res.status(400).json("Not Found");
   }
 });
+
+// // Load hash from your password DB.
+// bcrypt.compare("B4c0/\/", hash, function(err, res) {
+//     // res === true
+// });
+// bcrypt.compare("not_bacon", hash, function(err, res) {
+//     // res === false
+// });
