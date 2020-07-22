@@ -32,3 +32,4 @@ app.post("/signin", signin.handleSignIn(db, bcrypt));
 app.post("/register", register.handleRegister(db, bcrypt));
 app.get("/profile/:id", profile.handleGetProfile(db));
 app.put("/image", image.handleImageRequest(db));
+app.post("/imageurl", image.handleApiCall);
