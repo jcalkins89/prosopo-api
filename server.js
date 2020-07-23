@@ -11,10 +11,8 @@ const image = require("./controllers/image");
 const db = knex({
   client: "pg",
   connection: {
-    host: "postgresql-contoured-13214",
-    user: "joshcalkins",
-    password: "",
-    database: "prosopo-db",
+    host: process.env.DATABASE_URL,
+    ssl: true,
   },
 });
 
